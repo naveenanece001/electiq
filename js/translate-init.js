@@ -1,7 +1,8 @@
 "use strict";
+
 /**
  * Google Translate widget initialization callback.
- * Called automatically by the Translate API script on load.
+ * Invoked automatically by the Google Translate API script after load.
  * @returns {void}
  */
 function googleTranslateElementInit() {

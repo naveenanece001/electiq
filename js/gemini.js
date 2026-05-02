@@ -1,9 +1,9 @@
+"use strict";
+
 /**
  * ElectIQ - Gemini API Handler
  * Handles all AI interactions with gemini-2.5-flash
  */
-
-"use strict";
 
 const GEMINI_MODEL = "gemini-2.5-flash";
 const BASE_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}`;
@@ -114,7 +114,6 @@ async function callGemini(userMessage, history = [], onChunk = () => {}) {
         let response = await makeRequest();
 
         if (response.status === 429) {
-            console.warn("[ElectIQ] Rate limit hit. Retrying in 2s...");
             await new Promise(r => setTimeout(r, 2000));
             response = await makeRequest();
         }
@@ -160,7 +159,7 @@ async function callGemini(userMessage, history = [], onChunk = () => {}) {
                             onChunk(textChunk, fullText);
                         }
                     } catch (e) {
-                        console.warn("Parse error in stream:", e);
+                        /* stream chunk was not valid JSON — skip and continue */
                     }
                     buffer = buffer.substring(endIdx + 1);
                 } else {
@@ -175,4 +174,3 @@ async function callGemini(userMessage, history = [], onChunk = () => {}) {
         throw error;
     }
 }
-

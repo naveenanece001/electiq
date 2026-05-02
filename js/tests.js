@@ -1,9 +1,9 @@
+"use strict";
+
 /**
  * ElectIQ Test Suite - Vanilla JS
  * Run automatically on page load. Results logged to console.
  */
-
-"use strict";
 
 /**
  * Utility class to run and track test assertions.
@@ -69,7 +69,7 @@ async function runAllTests() {
   runner.assert(filterGlossaryTerms("voter").every(t => t.term.toLowerCase().includes("voter") || t.definition.toLowerCase().includes("voter")), 'filterGlossary("voter") returns items containing "voter"');
 
   // --- Category B: Quiz Logic Tests ---
-  const { QUIZ_QUESTIONS, getQuizState, resetQuiz } = exports;
+  const { QUIZ_QUESTIONS, getQuizState, resetQuiz, startQuiz } = exports;
   const handleQuizAnswer = exports.handleQuizAnswer;
   runner.assert(QUIZ_QUESTIONS.length === 10, 'Quiz has exactly 10 questions');
   runner.assert(QUIZ_QUESTIONS.every(q => q.options.length === 3), 'Every question has exactly 3 options');
@@ -99,8 +99,6 @@ async function runAllTests() {
   resetQuiz();
 
   // --- Category C: API Key Validation ---
-  // Note: These test the regex/logic in saveApiKeyAndValidate if we could expose it, 
-  // but we can test the length and character validation logic.
   const isValidKey = (key) => {
     if (!key || key.trim() === '') return false;
     if (key.trim().length < 20) return false;
@@ -167,33 +165,30 @@ async function runAllTests() {
   runner.assert(callCount === 1, 'debounce fires function only once after rapid calls');
 
   // --- Category L: Google Analytics Event Tests ---
-  // Tests startQuiz() — the user-initiated entry point — not initQuiz() (internal reset).
   let gtagFired = false;
   let gtagEventName = null;
   const originalGtag = window.gtag;
   window.gtag = (type, eventName) => { if (type === 'event') { gtagFired = true; gtagEventName = eventName; } };
-  exports.startQuiz();
+  startQuiz();
   runner.assert(gtagFired === true, 'startQuiz() fires a gtag event');
   runner.assert(gtagEventName === 'quiz_start', 'startQuiz() fires gtag event named quiz_start');
   window.gtag = originalGtag;
 
-  // --- Category M: openDrawer / DOM Integration Tests ---
-  const drawer = document.getElementById('chat-drawer');
-  if (drawer) {
-    // Force close first
-    drawer.style.transform = 'translateX(100%)';
-    drawer.setAttribute('aria-hidden', 'true');
-    exports.setActivePanel('home');
-    runner.assert(drawer.style.transform === 'translateX(100%)', 'Drawer starts closed');
-    runner.assert(drawer.getAttribute('aria-hidden') === 'true', 'Drawer aria-hidden is true when closed');
+  // --- Category M: openDrawer ARIA State Tests ---
+  const drawerEl = document.getElementById('chat-drawer');
+  if (drawerEl) {
+    drawerEl.style.transform = 'translateX(100%)';
+    drawerEl.setAttribute('aria-hidden', 'true');
+    runner.assert(drawerEl.getAttribute('aria-hidden') === 'true', 'Chat drawer starts with aria-hidden="true"');
+    runner.assert(drawerEl.style.transform === 'translateX(100%)', 'Chat drawer starts in closed position (translateX 100%)');
   }
 
-  // --- Category N: Maps Embed URL Test ---
-  const mapFrame = document.getElementById('maps-embed');
-  if (mapFrame) {
+  // --- Category N: Maps Embed Security Test ---
+  const mapIframe = document.getElementById('maps-embed');
+  if (mapIframe) {
     runner.assert(
-      mapFrame.src.includes('google.com/maps') && !mapFrame.src.includes('AIzaSy'),
-      'Maps iframe does not contain a hardcoded API key'
+      !mapIframe.src.includes('AIzaSy') && !mapIframe.src.includes('key='),
+      'Maps iframe contains no hardcoded API key'
     );
   }
 

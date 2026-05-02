@@ -1,9 +1,9 @@
+"use strict";
+
 /**
  * ElectIQ - Indian Context Data
  * Contains terminology, election stages, and assessment questions.
  */
-
-"use strict";
 
 const GLOSSARY_TERMS = [
   { term: "EPIC", category: "Voter ID", definition: "Elector Photo Identity Card; official voter ID issued by the ECI. Essential for identity verification.", link: "https://voters.eci.gov.in/" },

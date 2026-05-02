@@ -1,8 +1,8 @@
+"use strict";
+
 /**
  * ElectIQ - Professional Assistant Logic (Deep Refinement)
  */
-
-"use strict";
 
 /**
  * Sanitizes user input to prevent XSS attacks.
@@ -128,8 +128,8 @@ function trapFocusDrawer(e) {
 }
 
 /**
- * Opens the chat drawer, sets ARIA state, focuses input, and attaches focus trap.
- * Use this instead of directly manipulating drawer style in all code paths.
+ * Opens the chat drawer, sets ARIA state, focuses the input, and attaches focus trap.
+ * Single source of truth for all drawer-open operations.
  * @returns {void}
  */
 function openDrawer() {
@@ -233,7 +233,7 @@ function renderGlossary(terms) {
 
 /**
  * Starts a new quiz session from a user-initiated action.
- * Fires the quiz_start analytics event, then delegates to initQuiz().
+ * Fires quiz_start analytics event and delegates to initQuiz().
  * @returns {void}
  */
 function startQuiz() {
@@ -269,9 +269,10 @@ function renderQuiz() {
                 <h2 style="font-family: var(--font-heading);">Assessment Complete</h2>
                 <div style="font-size: 3.5rem; font-weight: 900; color: var(--accent); margin: 24px 0;">${quizScore} / ${QUIZ_QUESTIONS.length}</div>
                 <p style="margin-bottom: 32px; color: var(--text-secondary); font-size: 1.1rem;">Your Awareness Level: ${quizScore > 7 ? 'Advanced Citizen' : 'Active Observer'}</p>
-                <button class="btn-primary" onclick="startQuiz()">Restart Assessment</button>
+                <button id="btn-restart-quiz" class="btn-primary">Restart Assessment</button>
             </div>
         `;
+      document.getElementById('btn-restart-quiz')?.addEventListener('click', startQuiz);
       return;
     }
     const q = QUIZ_QUESTIONS[quizIndex];
@@ -280,10 +281,13 @@ function renderQuiz() {
             <p style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Question ${quizIndex + 1} of ${QUIZ_QUESTIONS.length}</p>
             <h2 style="font-size: 1.6rem; margin: 16px 0 32px 0; font-family: var(--font-heading); line-height: 1.3;">${q.q}</h2>
             <div style="display: grid; gap: 12px;" role="radiogroup" aria-label="Answer options">
-                ${q.options.map((opt, i) => `<button class="option-btn" onclick="handleQuizAnswer(${i})" aria-label="Option ${i + 1}: ${opt}" role="radio">${opt}</button>`).join('')}
+                ${q.options.map((opt, i) => `<button class="option-btn quiz-opt" data-idx="${i}" aria-label="Option ${i + 1}: ${opt}" role="radio">${opt}</button>`).join('')}
             </div>
         </div>
     `;
+    document.querySelectorAll('.quiz-opt').forEach(btn => {
+      btn.addEventListener('click', (e) => handleQuizAnswer(parseInt(e.target.dataset.idx)));
+    });
   } catch (err) {
     console.error('[ElectIQ] renderQuiz error:', err);
   }
@@ -615,6 +619,24 @@ function init() {
   document.getElementById('send-btn')?.addEventListener('click', sendMessage);
   document.getElementById('chat-input')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
 
+  // Attach event listeners for CSP compliance
+  document.getElementById('btn-electoral-search')?.addEventListener('click', () => window.open('https://electoralsearch.eci.gov.in/', '_blank'));
+  document.getElementById('btn-explore-glossary')?.addEventListener('click', () => setActivePanel('glossary'));
+  document.getElementById('btn-news-general')?.addEventListener('click', () => openNews('India election'));
+  document.getElementById('btn-news-mcc')?.addEventListener('click', () => openNews('Model Code of Conduct India'));
+  document.getElementById('btn-news-evm')?.addEventListener('click', () => openNews('EVM VVPAT India'));
+  document.getElementById('btn-news-voter')?.addEventListener('click', () => openNews('voter registration India'));
+  document.getElementById('btn-news-fetch')?.addEventListener('click', () => openNews('India election news'));
+  document.getElementById('btn-cand-search')?.addEventListener('click', openCandidateSearch);
+  document.getElementById('btn-map-search')?.addEventListener('click', updateMapEmbed);
+  document.getElementById('link-open-map')?.addEventListener('click', (e) => { e.preventDefault(); openPollingMap(); });
+  document.getElementById('btn-cvigil')?.addEventListener('click', () => window.open('https://cvigil.eci.gov.in/', '_blank'));
+  document.getElementById('btn-kyc')?.addEventListener('click', () => window.open('https://kyc.eci.gov.in/', '_blank'));
+  document.getElementById('btn-sync-cal')?.addEventListener('click', () => addToCalendar('Election Polling Day', '20241105T080000Z', '20241105T180000Z', 'National Polling Day. Visit your booth to vote.'));
+  document.getElementById('btn-nav-chat')?.addEventListener('click', toggleChat);
+  document.getElementById('btn-fab-chat')?.addEventListener('click', toggleChat);
+  document.getElementById('btn-close-chat')?.addEventListener('click', toggleChat);
+
   // Escape key closes modal and chat drawer
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
@@ -643,6 +665,7 @@ window._testExports = {
   TIMELINE_EVENTS,
   sanitizeInput,
   debounce,
+  openDrawer,
   getQuizState: () => ({ quizIndex, quizScore }),
   resetQuiz: initQuiz,
   startQuiz,
