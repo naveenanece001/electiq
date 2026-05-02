@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://translate.google.com https://translate.googleapis.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://generativelanguage.googleapis.com https://translate.googleapis.com https://www.google-analytics.com https://hn.algolia.com; frame-src https://www.google.com https://maps.google.com;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ElectIQ — AI-powered civic education platform for the Indian electoral process.">
+    <meta property="og:title" content="ElectIQ | Empowering Indian Democracy">
+    <meta property="og:description" content="AI-powered civic education platform for the Indian electoral process.">
+    <meta property="og:type" content="website">
+    <title>ElectIQ | Empowering Indian Democracy</title>
+
+    <!-- Efficiency: Font Loading Optimization via preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- Google Services: Analytics runtime config -->
+    <script src="js/analytics-init.js" defer></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link" style="position:absolute;left:-9999px;top:4px;z-index:9999;background:var(--brand);color:white;padding:8px 16px;border-radius:4px;font-weight:600;text-decoration:none;" onfocus="this.style.left='4px'" onblur="this.style.left='-9999px'">Skip to main content</a>
+
+    <!-- Subtle Animated Background -->
+    <div class="bg-animation"></div>
+
+    <div id="app-container">
+        <!-- Sidebar Navigation -->
+        <nav role="navigation" aria-label="Main navigation">
+            <div class="logo-area">ElectIQ</div>
+            <button data-panel="home" class="active" aria-current="page" aria-label="Overview home panel">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg> Overview
+            </button>
+            <button data-panel="timeline" aria-label="Election stages timeline" aria-current="false">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Election Stages
+            </button>
+            <button data-panel="voting-guide" aria-label="Voter guide panel" aria-current="false">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"></path></svg> Voter Guide
+            </button>
+            <button data-panel="glossary" aria-label="Glossary of election terms" aria-current="false">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg> Glossary
+            </button>
+            <button data-panel="quiz" aria-label="Citizen awareness assessment quiz" aria-current="false">
+                <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg> Assessment
+            </button>
+            <button data-panel="google-services" aria-label="ECI resources and Google services" aria-current="false">
+                <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> ECI Resources
+            </button>
+
+            <div style="margin-top: auto; padding: 16px; border-top: 1px solid var(--border);">
+                <button onclick="toggleChat()" style="width: 100%; justify-content: center; background: var(--brand-light); color: var(--accent);" aria-label="Open AI Assistant">
+                    <svg viewBox="0 0 24 24" style="stroke: var(--accent);"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                    ElectIQ AI
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main id="main-content" role="main" aria-label="Main content area">
+            <header>
+                <div id="google_translate_element" aria-label="Language translation powered by Google Translate" title="Translate this page"></div>
+                <button id="open-settings" style="background:none; border:none; cursor:pointer;" title="Settings" aria-label="Open System Settings">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="#111827" fill="none" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+            </header>
+
+            <!-- Home Panel -->
+            <section id="home" class="panel active" role="region" aria-label="Overview" aria-hidden="false">
+                <span style="text-transform: uppercase; letter-spacing: 2px; font-weight: 800; color: var(--accent); font-size: 0.75rem;">Digital Election Academy</span>
+                <h1 style="margin-top: 8px;">ElectIQ: Empowering <br>Indian Democracy.</h1>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 40px; max-width: 600px; line-height: 1.6;">Your high-fidelity intelligence hub for navigating the complexity of Indian elections with confidence and clarity.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div class="card">
+                        <h3>Registration Search</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 20px;">Verify your enrolment status in the official electoral roll immediately.</p>
+                        <button class="btn-primary" onclick="window.open('https://electoralsearch.eci.gov.in/', '_blank')">Electoral Search →</button>
+                    </div>
+                    <div class="card">
+                        <h3>Voter Education</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 20px;">Deep-dive into the technology and laws protecting your vote.</p>
+                        <button class="btn-primary" onclick="setActivePanel('glossary')">Explore Glossary</button>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 20px; border-left: 4px solid var(--accent); background: #f0f7ff;">
+                    <h3>ElectIQ Intelligence Assistant</h3>
+                    <p style="font-size: 0.95rem; line-height: 1.5;">Get instant, accurate answers to complex procedural questions using Gemini 2.5 Flash. Now updated with latest ECI handbook data.</p>
+                </div>
+            </section>
+
+            <!-- Timeline Panel -->
+            <section id="timeline" class="panel" role="region" aria-label="Election stages" aria-hidden="true">
+                <h2>10 Stages of Indian Elections</h2>
+                <p style="margin-bottom: 32px; color: var(--text-secondary);">Comprehensive roadmap from boundary delimitation to result certification.</p>
+                <div id="timeline-list"></div>
+            </section>
+
+            <!-- Voter Guide Panel -->
+            <section id="voting-guide" class="panel" role="region" aria-label="Voter guide" aria-hidden="true">
+                <h2>6 Key Execution Protocols</h2>
+                <div style="display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                    <div class="card">
+                        <h3>1. Enrolment (Form 6)</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.6;">The primary gateway for citizens reaching 18 years. Requires valid proof of residence and age. Register online at the ECI portal or via the Voter Helpline app.</p>
+                    </div>
+                    <div class="card">
+                        <h3>2. Ethical Voting Oath</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.6;">A moral commitment to cast a vote without fear or favor, resisting all inducements. This pillar ensures the integrity of the collective mandate.</p>
+                    </div>
+                    <div class="card">
+                        <h3>3. Identity Verification</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.6;">You must carry your EPIC (Voter ID) or one of the 12 alternative IDs like Aadhaar, PAN, or Passport to the booth to prove your identity to the PO.</p>
+                    </div>
+                    <div class="card">
+                        <h3>4. EVM/VVPAT Protocol</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.6;">Press the blue button once for your candidate. Verify that the VVPAT paper slip displays the correct name and symbol for 7 seconds behind the glass.</p>
+                    </div>
+                    <div class="card">
+                        <h3>5. Proxy & Postal Voting</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.6;">Facilitating democratic access for Service Voters (ETBPS), PwD citizens, and Senior Citizens (80+) who cannot visit a polling booth physically.</p>
+                    </div>
+                    <div class="card">
+                        <h3>6. Model Code (MCC)</h3>
+                        <p style="font-size: 0.9rem; line-height: 1.6;">Guidelines to ensure a level playing field. Candidates are barred from using official positions or government funds for partisan campaigning once announced.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Glossary Panel -->
+            <section id="glossary" class="panel" role="region" aria-label="Glossary" aria-hidden="true">
+                <h2>Verified Terminology Nexus</h2>
+                <p style="margin-bottom: 24px; color: var(--text-secondary);">Authoritative definitions linked directly to official ECI Portals and FAQ repositories.</p>
+                <input type="search" id="glossary-search" class="chat-input" placeholder="Search operational terms (e.g., NOTA, BLO, RO)..." style="width: 100%; margin-bottom: 32px;" aria-label="Search election terms" aria-controls="glossary-grid" maxlength="100">
+                <div id="glossary-grid" aria-live="polite" aria-label="Glossary results" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;"></div>
+            </section>
+
+            <!-- Quiz Panel -->
+            <section id="quiz" class="panel" role="region" aria-label="Assessment quiz" aria-hidden="true">
+                <h2>Citizen Awareness Audit</h2>
+                <p style="margin-bottom: 32px; color: var(--text-secondary);">Test your knowledge with 10 standard voting awareness questions.</p>
+                <div id="quiz-container"></div>
+                <div id="quiz-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+            </section>
+
+            <!-- Google Services Panel -->
+            <section id="google-services" class="panel" role="region" aria-label="Resources" aria-hidden="true">
+                <h2>Official & Google Resources</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+                    <div class="card" style="grid-column: span 2;">
+                        <h3 style="color: var(--accent);">Live Election News</h3>
+                        <p style="font-size: 0.85rem; margin: 8px 0 16px 0;">Real-time election news powered by Hacker News Algolia API. Choose a topic:</p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
+                          <button class="btn-primary" style="font-size:0.8rem; padding: 8px 14px;" onclick="openNews('India election')" aria-label="View General Elections news">General Elections</button>
+                          <button class="btn-primary" style="font-size:0.8rem; padding: 8px 14px; background: var(--text-secondary);" onclick="openNews('Model Code of Conduct India')" aria-label="View MCC updates">MCC Updates</button>
+                          <button class="btn-primary" style="font-size:0.8rem; padding: 8px 14px; background: var(--text-secondary);" onclick="openNews('EVM VVPAT India')" aria-label="View EVM news">EVM News</button>
+                          <button class="btn-primary" style="font-size:0.8rem; padding: 8px 14px; background: var(--text-secondary);" onclick="openNews('voter registration India')" aria-label="View voter registration news">Voter Registration</button>
+                        </div>
+                        <button class="btn-primary" style="width: 100%; background: #ea4335;" onclick="openNews('India election news')">
+                          Fetch Live News →
+                        </button>
+                        <div id="news-results" style="margin-top: 16px;"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Google Search Verification</h3>
+                        <p style="font-size: 0.85rem; margin: 12px 0;">Verify candidate profiles and backgrounds using Google Search.</p>
+                        <input type="text" id="candidate-name" class="chat-input" placeholder="Candidate/Area name..." style="width: 100%; margin-bottom: 12px;" aria-label="Candidate search query" maxlength="200">
+                        <button class="btn-primary" style="width: 100%;" onclick="openCandidateSearch()">Google Search</button>
+                    </div>
+                    <div class="card" style="grid-column: span 2;">
+                        <h3>Maps Booth Locator</h3>
+                        <p style="font-size: 0.85rem; margin: 12px 0;">Locate your polling station and get route navigation via Google Maps.</p>
+                        <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                          <input type="text" id="poll-address" class="chat-input" 
+                            placeholder="Enter Locality, City (e.g. Anna Nagar, Chennai)..." 
+                            style="flex: 1;"
+                            aria-label="Enter your locality to find polling station"
+                            maxlength="200">
+                          <button class="btn-primary" onclick="updateMapEmbed()" aria-label="Search on Google Maps">Search</button>
+                        </div>
+                        <iframe 
+                          id="maps-embed"
+                          src="https://www.google.com/maps?q=Hyderabad+India+polling+station&output=embed"
+                          width="100%" 
+                          height="300" 
+                          style="border:0; border-radius: 8px;" 
+                          allowfullscreen 
+                          loading="lazy" 
+                          referrerpolicy="no-referrer-when-downgrade"
+                          title="Google Maps polling station finder"
+                          aria-label="Interactive map showing polling stations">
+                        </iframe>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px;">
+                          Map shows results for your search area. 
+                          <a href="#" onclick="openPollingMap(); return false;" style="color: var(--accent);">Open in full Google Maps →</a>
+                        </p>
+                    </div>
+                    <div class="card">
+                        <h3>cVIGIL & KYC</h3>
+                        <p style="font-size: 0.85rem; margin: 12px 0;">Report violations and view candidate criminal antecedents.</p>
+                        <button class="btn-primary" style="width: 100%;" onclick="window.open('https://cvigil.eci.gov.in/', '_blank')">cVIGIL Portal</button>
+                        <button class="btn-primary" style="width: 100%; margin-top: 8px; background: var(--text-secondary);" onclick="window.open('https://kyc.eci.gov.in/', '_blank')">KYC Portal</button>
+                    </div>
+                    <div class="card">
+                        <h3>Calendar Sync</h3>
+                        <p style="font-size: 0.85rem; margin: 12px 0;">Add critical election dates to your personal Google schedule.</p>
+                        <button class="btn-primary" style="width: 100%; background: #10b981;" onclick="addToCalendar('Election Polling Day', '20241105T080000Z', '20241105T180000Z', 'National Polling Day. Visit your booth to vote.')">Sync Polling Day</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- AI FAB with Label -->
+    <div class="chat-fab-container">
+        <span class="chat-fab-label">ElectIQ Intelligence</span>
+        <button class="chat-fab" onclick="toggleChat()" title="Talk to AI Assistant" aria-label="Toggle AI Assistant" type="button">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+        </button>
+    </div>
+
+    <!-- AI Drawer -->
+    <div id="chat-drawer" class="chat-drawer" role="dialog" aria-modal="true" aria-labelledby="chat-drawer-title" aria-hidden="true">
+        <div class="chat-header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 id="chat-drawer-title" style="margin: 0; font-family: var(--font-heading);">ElectIQ Intelligence</h3>
+                <button onclick="toggleChat()" style="background:none; border:none; cursor:pointer;" aria-label="Close Chat">✕</button>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">Verified Indian Election Knowledge Base</p>
+        </div>
+        <div id="chat-messages" class="messages" role="log" aria-live="polite" aria-label="Chat conversation">
+            <div class="message bot">Namaste. I am ElectIQ Intelligence. Ask me about EVMs, Constitutional rights, or the Model Code of Conduct.</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" aria-label="Type your election question here" placeholder="Type query..." maxlength="1000">
+            <button id="send-btn" class="btn-primary" aria-label="Send message">Send</button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title" aria-hidden="true" style="display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 40px; backdrop-filter: blur(10px);">
+        <div class="card" style="max-width: 450px; width: 100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h2 id="settings-title" style="margin: 0;">System Configuration</h2>
+                <div id="api-status"></div>
+            </div>
+            <p style="font-size: 0.9rem; margin-bottom: 12px;">Enter your Gemini API Key. <a href="https://aistudio.google.com/" target="_blank">Get Key</a></p>
+            <input type="password" id="api-key-input" class="chat-input" aria-label="Gemini API Key" aria-describedby="api-key-hint" placeholder="Paste Key..." style="width: 100%; margin-bottom: 12px;">
+            <p id="api-key-hint" style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:24px;">Your key is stored only in session memory and never sent to our servers.</p>
+            <div style="display: flex; gap: 12px;">
+                <button id="save-key-btn" class="btn-primary" style="flex: 1;">Connect</button>
+                <button id="close-settings" class="btn-primary" style="background: var(--border); color: var(--brand); flex: 1;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <footer role="contentinfo" aria-label="Site information" style="display:none;" aria-hidden="true">
+      <p>ElectIQ — AI-powered civic education. Data sourced from ECI official portals.</p>
+    </footer>
+
+    <!-- Scripts with defer for non-blocking load -->
+    <script src="js/translate-init.js" defer></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
+    <script src="js/data.js" defer></script>
+    <script src="js/gemini.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/tests.js" defer></script>
+</body>
+</html>
